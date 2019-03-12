@@ -12,7 +12,8 @@ class App extends React.Component {
 				this.state ={
 					subreddit_list: [],
 					subreddit:"",
-					hot_list: [] 
+					hot_list: [],
+					isloading: null
 				}
 		this.getSubList = this.getSubList.bind(this)
 		this.handleChange = this.handleChange.bind(this)
@@ -42,49 +43,60 @@ class App extends React.Component {
 			.then(response => response.json())
 			.then(data => { 
 				this.setState({
-					hot_list: data.subreddit_hot_data
+					hot_list: data.subreddit_hot_data,
+					isloading: false 
 			})				
 		})
 	}
 
 	updSubReddit(name, value) {
 			this.setState({
-				[name]: value
+				[name]: value,
+				isloading: true
 			})
 	}
 
 	handleChange(event) {
 		const {name, value} = event.target	
-
 		this.updSubReddit(name, value);
 		this.getSubHot(value);
 	}
 
 		render() {
 
-    return (
-      <div className="App">
-				<Header />
-				<p>Choose a subreddit and see whats hot</p>
-				<br />
-			 <Subredditcontainer 
-					handleChange={this.handleChange}
-					subreddit={this.state.subreddit}
-					subreddit_list={this.state.subreddit_list}
-			/>
-			<br />
-			<h4>{this.state.subreddit}</h4>
-        <CSSTransitionGroup
-          transitionName="example"
-          transitionEnterTimeout={500}
-          transitionLeaveTimeout={300}>
-					{this.state.hot_list.length > 0 ? 
-					<Displaycont hot_list={this.state.hot_list} /> : null}
-        </CSSTransitionGroup>
-	</div>
+			const{subreddit_list, subreddit, hot_list, isloading} = this.state
 
+    return (
+							<div className="App">
+								<Header />
+								<p>Choose a subreddit and see whats hot</p>
+								<br />
+							 <Subredditcontainer 
+									handleChange={this.handleChange}
+									subreddit={subreddit}
+									subreddit_list={subreddit_list}
+							/>
+							<br />
+							{isloading ? <div id="fountainG"> 
+								<div id="fountainG_1" className="fountainG"></div>
+									<div id="fountainG_2" className="fountainG"></div>
+									<div id="fountainG_3" className="fountainG"></div>
+									<div id="fountainG_4" className="fountainG"></div>
+									<div id="fountainG_5" className="fountainG"></div>
+									<div id="fountainG_6" className="fountainG"></div>
+									<div id="fountainG_7" className="fountainG"></div>
+									<div id="fountainG_8" className="fountainG"></div>	
+								</div>: null}
+							<CSSTransitionGroup
+							transitionName="example"
+							transitionEnterTimeout={2000}
+							transitionLeaveTimeout={1000}
+							>
+							<h4>{subreddit}</h4>
+							{hot_list.length > 0 ? <Displaycont hot_list={hot_list} /> : null}
+						</CSSTransitionGroup>
+			</div>
       )
-	
 	}
 }
 
