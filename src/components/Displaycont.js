@@ -17,18 +17,13 @@ function Displaycont(props) {
             <div className="newsfooter">
               <a href={"https://reddit.com".concat(d.permalink)}>
                 <img
-                  src="comment-white-oval-bubble.svg"
-                  alt=""
-                  title="comment"
+                  src="comment-white-oval-bubble.svg" alt="" title="comment"
                 />
               </a>
               <a href={d.url}>
                 <img src="chain-links.svg" alt="" title="link" />
               </a>
-              <a href={d.url}>
-                <img src="network.svg" alt="" title="share" />
-              </a>
-              <span>
+              <span title="total comments">
                 {d.num_comments < 1000
                   ? d.num_comments
                   : (d.num_comments / 1000).toFixed(2) + "K"}
