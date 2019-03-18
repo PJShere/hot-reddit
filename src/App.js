@@ -12,7 +12,6 @@ class App extends React.Component {
     this.state = {
       subreddit_list: [],
       subreddit: "",
-      subreddit_tag: "",
       hot_list: [],
       isloading: null,
 			searchval: "",
@@ -40,37 +39,24 @@ class App extends React.Component {
   }
 
   getSubHot(value) {
-		if (value === "---Please choose a subreddit---") {
-			console.log('Invalid input');
-			this.setState({
-				isloading: null, 
-				subreddit_tag: "",
-				iserror: true
-			})
-		}
-		else
-		{
     var apiurl = "http://127.0.0.1:5000/hot-reddit/api/gethotposts/";
     var hoturl = apiurl.concat(value);
-    //console.log(hoturl)
     fetch(hoturl)
       .then(response => response.json())
       .then(data => {
         this.setState({
           hot_list: data.subreddit_hot_data,
-					subreddit_tag: value,
+					subreddit: value,
           isloading: false,
 					iserror: false
         });
 			})
 			.catch(err => {
-				console.log('Invalid Sub')
 				this.setState({
 					isloading: false,
 					iserror: true
 				})
 			})
-		}
 	}
 
   updSubReddit(name, value) {
@@ -83,8 +69,7 @@ class App extends React.Component {
   handleChange(event) {
     const { name, value } = event.target;
 		this.setState({
-			searchval: "",
-			iserror: false
+			searchval: ""
 		})
     this.updSubReddit(name, value);
     this.getSubHot(value);
@@ -92,8 +77,7 @@ class App extends React.Component {
 
   handleSearchChange(event) {
 		this.setState({
-			searchval: event.target.value,
-			subreddit: ""
+			searchval: event.target.value
 		})
   }
 
@@ -107,7 +91,7 @@ class App extends React.Component {
 
 
   render() {
-    const { iserror, subreddit_tag, searchval, subreddit_list, hot_list, isloading } = this.state;
+    const { iserror, subreddit, searchval, subreddit_list, hot_list, isloading } = this.state;
 
     return (
       <div className="App">
@@ -139,11 +123,11 @@ class App extends React.Component {
         ) : null}
         <CSSTransitionGroup
           transitionName="example"
-          transitionEnterTimeout={2000}
-          transitionLeaveTimeout={1000}
+          transitionEnterTimeout={700}
+          transitionLeaveTimeout={500}
         >
 
-					{iserror ? <p className="errormsg">Invalid Sub selected, please reselect....</p>: <h4>{subreddit_tag}</h4>}
+					{iserror ? <p className="errormsg">Invalid Sub selected, please reselect....</p>: <h4>{subreddit}</h4>}
 
           {hot_list.length > 0 && !iserror ? <Displaycont hot_list={hot_list} /> : null}
 

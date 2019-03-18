@@ -8,7 +8,8 @@ function Subredditcontainer (props) {
 
 	const div_red = (		<div className="select-style">
 											<select
-											value= {props.subreddit}
+											className="select"
+											value= {props.subreddit_list[0]}
 											onChange={props.handleChange}
 											name="subreddit"
 										>
