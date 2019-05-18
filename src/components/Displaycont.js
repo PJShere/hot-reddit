@@ -15,7 +15,7 @@ function Displaycont(props) {
               <p>{d.title}</p>
             </div>
             <div className="newsfooter">
-              <a href={"https://reddit.com".concat(d.permalink)}>
+              <a href={"https://old.reddit.com".concat(d.permalink)}>
                 <img
                   src="comment-white-oval-bubble.svg" alt="" title="comment"
                 />

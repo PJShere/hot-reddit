@@ -3,7 +3,6 @@ import Subredditcontainer from "./components/SubredditContainer";
 import "./style.css";
 import Header from "./components/Header";
 import Displaycont from "./components/Displaycont";
-import { CSSTransitionGroup } from "react-transition-group";
 //import Footer from './components/Footer';
 
 class App extends React.Component {
@@ -109,7 +108,7 @@ class App extends React.Component {
           subreddit_list={subreddit_list}
         />
         <br />
-        {isloading ? (
+        {isloading && (
           <div id="fountainG">
             <div id="fountainG_1" className="fountainG" />
             <div id="fountainG_2" className="fountainG" />
@@ -120,18 +119,11 @@ class App extends React.Component {
             <div id="fountainG_7" className="fountainG" />
             <div id="fountainG_8" className="fountainG" />
           </div>
-        ) : null}
-        <CSSTransitionGroup
-          transitionName="example"
-          transitionEnterTimeout={700}
-          transitionLeaveTimeout={500}
-        >
-
+        )}
 					{iserror ? <p className="errormsg">Invalid Sub selected, please reselect....</p>: <h4>{subreddit}</h4>}
 
-          {hot_list.length > 0 && !iserror ? <Displaycont hot_list={hot_list} /> : null}
-
-        </CSSTransitionGroup>
+					{
+						hot_list.length > 0 && !iserror && <Displaycont hot_list={hot_list} />					}
       </div>
     );
   }
